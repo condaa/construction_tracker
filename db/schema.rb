@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_25_180712) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_25_182429) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "tickets", force: :cascade do |t|
+    t.string "title", limit: 255
+    t.text "description"
+    t.integer "assigned_user_id"
+    t.date "due_date"
+    t.integer "status_id"
+    t.integer "progress"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assigned_user_id"], name: "index_tickets_on_assigned_user_id"
+    t.index ["due_date", "status_id"], name: "index_tickets_on_due_date_and_status_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", limit: 255
