@@ -12,5 +12,6 @@ class Ticket < ApplicationRecord
 
   # Scopes
   scope :not_done, -> { where.not(status_id: :done) }
+  scope :with_remindable_status, -> { not_done }
 
 end

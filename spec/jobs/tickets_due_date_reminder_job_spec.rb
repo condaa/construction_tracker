@@ -8,7 +8,7 @@ RSpec.describe TicketsDueDateReminderJob, type: :job do
     allow(User).to receive(:with_due_date_reminder).and_return(User)
     allow(User).to receive_message_chain(:includes, :joins, :merge, :where).and_return(User)
 
-    expect(Ticket).to receive(:not_done).and_return(ticket)
+    expect(Ticket).to receive(:with_remindable_status).and_return(ticket)
     expect(Ticket).to receive(:find_each).and_yield(ticket)
     expect(subject).to receive(:send_due_date_reminder).with(user, ticket)
 

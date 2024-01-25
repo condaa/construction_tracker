@@ -17,7 +17,7 @@ class TicketsDueDateReminderJob < ApplicationJob
     User.with_due_date_reminder.
     includes(:tickets).
     joins(:tickets).
-    merge(Ticket.not_done).
+    merge(Ticket.with_remindable_status).
     where("tickets.due_date = date('#{earliest_tz_today_date}') + users.due_date_reminder_interval")
   end
 
