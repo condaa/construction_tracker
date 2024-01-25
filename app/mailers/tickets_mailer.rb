@@ -1,0 +1,3 @@
+class TicketsMailer < ApplicationMailer
+  
+end
