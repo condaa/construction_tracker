@@ -12,7 +12,7 @@ class CreateTickets < ActiveRecord::Migration[7.1]
     end
 
     add_index :tickets, :assigned_user_id
-    # this attributes combination alongside with 'assigned_user_id' is used 1 time daily (at TicketsDueReminderJob)
+    # this attributes combination alongside with 'assigned_user_id' is used 1 time daily (at TicketsDueDateReminderJob)
     # including 'assigned_user_id' to the composite is debatable though (since it's separately indexed, but it's a must)
     add_index :tickets, [:due_date, :status_id]
   end
