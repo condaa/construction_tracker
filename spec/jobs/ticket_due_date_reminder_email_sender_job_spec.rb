@@ -1,0 +1,16 @@
+require 'rails_helper'
+
+RSpec.describe TicketDueDateReminderEmailSenderJob, type: :job do
+  let(:user_mail) { 'late@user.com' }
+  let(:ticket_title) { 'Some Title' }
+
+  puts "\n\n>>>>>>>>>>>>>>>>>>>>>>>>> Temporarily Comment >>>>>>>>>>>>>>>>>>>>>>>>>"
+  puts "\tSending emails configurations isn't set yet"
+  puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n"
+
+  it 'enqueues TicketDueDateReminderEmailSenderJob which sends ticket due_date_reminder email' do
+    expect(TicketsMailer).to receive(:due_date_reminder).with(user_mail, ticket_title).
+    and_return(double("Mailer", deliver_now!: nil))
+    subject.perform(user_mail, ticket_title)
+  end
+end
