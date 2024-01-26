@@ -52,3 +52,19 @@ What is in the Application:
   13. `app/jobs/ticket_due_date_reminder_email_sender_job.rb`, a BG job is enqueued by the previous crone job to send the ticket reminder email
   14. `spec/jobs/tickets_due_date_reminder_job_spec.rb`, TicketsDueDateReminderJob spec
   15. `spec/jobs/ticket_due_date_reminder_email_sender_job_spec.rb`, TicketDueDateReminderEmailSenderJob spec
+
+To test it manually:
+  open Sidekiq by `bundle exec sidekiq`, to check everything is processed at the background
+  open Rails console by `rails c`
+  add some users and tickets
+  ```
+  user = FactoryBot.create(:user)
+  ticket = FactoryBot.create(:ticket, assigned_user: user)
+  # explicitly run the self-triggered job now
+  TicketsDueDateReminderJob.perform_now
+  # you will see the ticket you just created is enqueued to be reminded of
+  # play with the data to see different results, considered attributes:
+  # users' 'send_due_date_reminder', 'due_date_reminder_interval', 'due_date_reminder_time' & 'time_zone'
+  # tickets' 'assigned_user_id'm 'due_date', 'status_id'
+  # enjoy!
+  ```
