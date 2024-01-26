@@ -37,6 +37,7 @@ gem "bootsnap", require: false
 
 gem 'clockwork'
 gem 'sidekiq'
+gem 'will_paginate', '~> 3.3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -44,6 +45,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 6.0'
   gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
 end
 
 group :development do
