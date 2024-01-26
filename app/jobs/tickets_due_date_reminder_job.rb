@@ -32,10 +32,15 @@ class TicketsDueDateReminderJob < ApplicationJob
     # just for the sake of POC, I assume only user's mail and ticket's title are needed
     # instead of sending IDs then fetching the 2 records from the DB later
     # since we know it's better to pass minimal data when enqueueing background jobs instead of passing the full objects
-    TicketDueDateReminderEmailSenderJob.perform_later(user.mail, ticket.title)
+    TicketDueDateReminderEmailSenderJob.set(wait_until: user_due_date_reminder_time(user)).
+    perform_later(user.mail, ticket.title)
+  end
+
+  def user_due_date_reminder_time(user)
+    user.due_date_reminder_time_on_date(earliest_tz_today_date)
   end
 
   def earliest_tz_today_date
-    ActiveSupport::TimeZone['Pacific/Kiritimati'].now.to_date
+    @earliest_tz_today_date ||= ActiveSupport::TimeZone['Pacific/Kiritimati'].now.to_date
   end
 end
