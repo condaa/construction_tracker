@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe TicketsDueDateReminderJob, type: :job do
-  let(:user) { create(:user, send_due_date_reminder: true, due_date_reminder_interval: 0) }
-  let(:ticket) { create(:ticket, assigned_user: user, due_date: Date.today, status_id: Ticket.status_ids[:backlog]) }
+  let(:user) { create(:user) }
+  let(:ticket) { create(:ticket, assigned_user: user) }
 
   it 'sends due date reminders to users with tickets to be reminded' do
     allow(User).to receive(:with_due_date_reminder).and_return(User)
