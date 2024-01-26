@@ -1,24 +1,54 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Application description:
+  Ruby on Rails only-APIs app for construction documentation & defect management
+  users create many tickets daily which are usually created to report a defect and it is assigned to a project member to fix it
 
-Things you may want to cover:
+Dependencies installation:
+  Rails 7.1.3 with Ruby 3.2.2
+  PostgreSQL 14.10 (client and server)
+  Redis 7.0.11 (client and server)
 
-* Ruby version
+Gems installation:
+  bundle install
 
-* System dependencies
+Database creation:
+  rails db:create
 
-* Configuration
+Database migration:
+  rails db:migrate
 
-* Database creation
+Test suite running:
+  rspec
 
-* Database initialization
+Scheduling jobs library running:
+  bundle exec clockwork clock.rb
 
-* How to run the test suite
+Background jobs library running:
+  bundle exec sidekiq
 
-* Services (job queues, cache servers, search engines, etc.)
+Main application goal:
+  Remind the users with the unfinished tickets on their preferred time
 
-* Deployment instructions
+How it works:
+  a self-triggered job is run every midnight (at earliest time zone, more details in the code) to check if there are
+  users to be reminded of their remindable tickets
+  it selects the preferred user medium to be reminded on (only emails so far)
+  it enqueues a background job for each reminder to be run on the preffered user time
 
-* ...
+What is in the Application:
+  01. users table migration
+  02. User model
+  03. users factory
+  04. user spec
+  05. tickets table migration
+  06. Ticket model
+  07. tickets factory
+  08. ticket spec
+  09. added more 5 needed gems ('rspec-rails', 'shoulda-matchers', 'factory_bot_rails', 'clockwork' & 'sidekiq')
+  10. the 5 needed gems configurations
+  11. `clock.rb`, where we list the cron jobs
+  12. `app/jobs/tickets_due_date_reminder_job.rb`, the cron job that's invoked every midnight
+  13. `app/jobs/ticket_due_date_reminder_email_sender_job.rb`, a BG job is enqueued by the previous crone job to send the ticket reminder email
+  14. `spec/jobs/tickets_due_date_reminder_job_spec.rb`, TicketsDueDateReminderJob spec
+  15. `spec/jobs/ticket_due_date_reminder_email_sender_job_spec.rb`, TicketDueDateReminderEmailSenderJob spec
