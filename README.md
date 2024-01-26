@@ -3,58 +3,73 @@
 Application description:
 
   Ruby on Rails only-APIs app for construction documentation & defect management
+
   users create many tickets daily which are usually created to report a defect and it is assigned to a project member to fix it
 
+----------
 
 Dependencies installation:
 
   Rails 7.1.3 with Ruby 3.2.2
+
   PostgreSQL 14.10 (client and server)
+
   Redis 7.0.11 (client and server)
 
+----------
 
 Gems installation:
 
-  bundle install
+  `bundle install`
 
+----------
 
 Database creation:
 
-  rails db:create
+  `rails db:create`
 
+----------
 
 Database migration:
 
-  rails db:migrate
+  `rails db:migrate`
 
+----------
 
 Test suite running:
 
-  rspec
+  `rspec`
 
+----------
 
 Scheduling jobs library running:
 
-  bundle exec clockwork clock.rb
+  `bundle exec clockwork clock.rb`
 
+----------
 
 Background jobs library running:
 
-  bundle exec sidekiq
+  `bundle exec sidekiq`
 
+----------
 
 Main application goal:
 
   Remind the users with the unfinished tickets on their preferred time
 
+----------
 
 How it works:
 
   a self-triggered job is run every midnight (at earliest time zone, more details in the code) to check if there are
   users to be reminded of their remindable tickets
+
   it selects the preferred user medium to be reminded on (only emails so far)
+
   it enqueues a background job for each reminder to be run on the preffered user time
 
+----------
 
 What is in the Application:
   01. users table migration
@@ -73,12 +88,16 @@ What is in the Application:
   14. `spec/jobs/tickets_due_date_reminder_job_spec.rb`, TicketsDueDateReminderJob spec
   15. `spec/jobs/ticket_due_date_reminder_email_sender_job_spec.rb`, TicketDueDateReminderEmailSenderJob spec
 
+----------
 
 To test it manually:
 
   open Sidekiq by `bundle exec sidekiq`, to check everything is processed at the background
+
   open Rails console by `rails c`
-  add some users and tickets
+
+  add some users and tickets:
+
   ```
   user = FactoryBot.create(:user)
   ticket = FactoryBot.create(:ticket, assigned_user: user)
