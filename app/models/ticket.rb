@@ -14,4 +14,10 @@ class Ticket < ApplicationRecord
   scope :not_done, -> { where.not(status_id: :done) }
   scope :with_remindable_status, -> { not_done }
 
+  # assessment comment: we may need to ask the PM &| customers if they need to receive reminders if 'due_date' is
+  # changed and this change met the reminder date
+  # e.g. user's (send_due_date_reminder, due_date_reminder_interval) are (true, 1)
+  #      and ticket's due_date is changed to tomorrow
+  # so in such case we will add a callback to handle that
+
 end
