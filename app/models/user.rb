@@ -15,4 +15,16 @@ class User < ApplicationRecord
   # Scopes
   scope :with_due_date_reminder, -> { where(send_due_date_reminder: true) }
 
+  # Attributes
+  def due_date_reminder_time_on_date(date)
+    Time.zone.local(
+      date.year,
+      date.month,
+      date.day,
+      self.due_date_reminder_time.hour,
+      self.due_date_reminder_time.min,
+      self.due_date_reminder_time.sec
+    )
+  end
+
 end
