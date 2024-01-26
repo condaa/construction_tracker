@@ -80,13 +80,16 @@ What is in the Application:
   06. Ticket model
   07. tickets factory
   08. ticket spec
-  09. added more 5 needed gems ('rspec-rails', 'shoulda-matchers', 'factory_bot_rails', 'clockwork' & 'sidekiq')
-  10. the 5 needed gems configurations
+  09. added more 7 needed gems ('rspec-rails', 'shoulda-matchers', 'factory_bot_rails', 'clockwork', 'sidekiq', 'will_paginate' & 'rails-controller-testing')
+  10. added configurations for 5 of them (who required so)
   11. `clock.rb`, where we list the cron jobs
   12. `app/jobs/tickets_due_date_reminder_job.rb`, the cron job that's invoked every midnight
   13. `app/jobs/ticket_due_date_reminder_email_sender_job.rb`, a BG job is enqueued by the previous crone job to send the ticket reminder email
   14. `spec/jobs/tickets_due_date_reminder_job_spec.rb`, TicketsDueDateReminderJob spec
   15. `spec/jobs/ticket_due_date_reminder_email_sender_job_spec.rb`, TicketDueDateReminderEmailSenderJob spec
+  16. tickets controller
+  17. tickets controller spec
+  18. application controller spec
 
 ----------
 
